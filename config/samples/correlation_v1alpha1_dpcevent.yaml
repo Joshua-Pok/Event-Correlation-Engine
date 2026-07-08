@@ -1,0 +1,9 @@
+apiVersion: correlation.dell.com/v1alpha1
+kind: DpcEvent
+metadata:
+  labels:
+    app.kubernetes.io/name: event-correlation-engine
+    app.kubernetes.io/managed-by: kustomize
+  name: dpcevent-sample
+spec:
+  # TODO(user): Add fields here

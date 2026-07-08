@@ -1,0 +1,7 @@
+## Append samples of your project ##
+resources:
+- correlation_v1alpha1_dpcevent.yaml
+- correlation_v1alpha1_dpceventgroup.yaml
+- correlation_v1alpha1_correlationrule.yaml
+- correlation_v1alpha1_eventcorrelation.yaml
+# +kubebuilder:scaffold:manifestskustomizesamples
