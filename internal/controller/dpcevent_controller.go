@@ -35,8 +35,40 @@ func (r *DpcEventReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 
 	logger.Info("reconciling event", "name", event.Name, "severity", event.Spec.Severity)
 
-	//If already correlated, skip event
-	if event.Status.RoutedTo
+	if event.Status.Correlated {
+		logger.Info("Event already correlated, skipping")
+		return ctrl.Result{}, nil
+	}
+
+	group, found, err := r.findOpenGroup(ctx, event.Spec.Node, event.Namespace)
+	if err != nil {
+		logger.Error(err, "Failed to open group")
+		return ctrl.Result{}, err
+	}
+
+	//create if does not exist if not update
+	if !found {
+		group, err = r.Create(ctx, &event)
+		if err != nil {
+			logger.Error(err, "Failed to create group")
+			return ctrl.Result{}, err
+		}
+		logger.Info("Created a new DPCEVent: ", "group", group.Name)
+	} else {
+		err = r.addEventToGroup(ctx, &grp, &event)
+		if err != nil {
+			logger.Error(err, "Failed to add event to group")
+			return ctrl.Result{}, err
+		}
+	}
+
+	//cleanup --> mark event as correlated
+
+	event.Status.Correlated = true
+	event.Status.GroupRef = group.Name
+	event.Status.ProcessedAt = metav1.Now()
+
+	logger.Info("Successfully correlated event")
 
 	return ctrl.Result{}, nil
 }

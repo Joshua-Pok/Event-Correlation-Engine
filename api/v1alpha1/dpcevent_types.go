@@ -33,12 +33,12 @@ type DPCSource struct { //needs to be exported
 // DpcEventSpec defines the desired state of DpcEvent
 type DpcEventSpec struct {
 	Source      *DPCSource `json:"soure,omitempty"`
-	Component   string     `json:"component,omitempty"`
+	Component   string     `json:"component,omitempty"i`
 	ComponentID int32      `json:"componentid,omitempty"`
 	Severity    string     `json:"severity,omitempty"`
 }
 
-// DpcEventStatus defines the observed state of DpcEvent.
+// DpcEventStatus defnes the observed state of DpcEvent.
 type DpcEventStatus struct {
 	Phase           string             `json:"phase,omitempty"`
 	Reason          string             `json:"reason,omitempty"`
@@ -46,6 +46,10 @@ type DpcEventStatus struct {
 	Callhomed       bool               `json:"callhomed,omitempty"`
 	RoutedTo        string             `json:"routedto,omitempty"`
 	Conditions      []metav1.Condition `json:"conditions,omitempty"`
+
+	Correlated  bool        `json:"correlated,omitempty"`
+	GroupRef    string      `json:"groupRef,omitempty"`
+	ProcessedAt metav1.Time `json:"processedAt,omitempty"`
 }
 
 // +kubebuilder:object:root=true

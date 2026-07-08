@@ -43,7 +43,7 @@ type DpcEventGroupStatus struct {
 	Events         []EventReference `json:"events,omitempty"`
 	FirstEventTime metav1.Time      `json:"firstEventTime,omitempty"`
 	LastEventTime  metav1.Time      `json:"lastEventTime,omitempty"`
-	WindowExpires  metav1.Time      `json:windowExpires,omitempty`
+	WindowExpires  metav1.Time      `json:"windowExpires,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -52,7 +52,6 @@ type DpcEventGroupStatus struct {
 // DpcEventGroup is the Schema for the dpceventgroups API
 type DpcEventGroup struct {
 	metav1.TypeMeta `json:",inline"`
-
 	// metadata is a standard object metadata
 	// +optional
 	metav1.ObjectMeta `json:"metadata,omitzero"`

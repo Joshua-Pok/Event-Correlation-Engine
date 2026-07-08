@@ -4,20 +4,20 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.21.0
-  name: dpcevents.correlation.dell.com
+  name: eventcorrelations.correlation.dell.com
 spec:
   group: correlation.dell.com
   names:
-    kind: DpcEvent
-    listKind: DpcEventList
-    plural: dpcevents
-    singular: dpcevent
+    kind: EventCorrelation
+    listKind: EventCorrelationList
+    plural: eventcorrelations
+    singular: eventcorrelation
   scope: Namespaced
   versions:
   - name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: DpcEvent is the Schema for the dpcevents API
+        description: EventCorrelation is the Schema for the eventcorrelations API
         properties:
           apiVersion:
             description: |-
@@ -37,34 +37,31 @@ spec:
           metadata:
             type: object
           spec:
-            description: spec defines the desired state of DpcEvent
+            description: spec defines the desired state of EventCorrelation
             properties:
-              component:
+              foo:
+                description: foo is an example field of EventCorrelation. Edit eventcorrelation_types.go
+                  to remove/update
                 type: string
-              componentid:
-                format: int32
-                type: integer
-              severity:
+              source:
                 type: string
-              soure:
-                properties:
-                  idrac:
-                    type: string
-                  ocp:
-                    type: string
-                  outcome:
-                    type: string
-                type: object
+            required:
+            - source
             type: object
           status:
-            description: status defines the observed state of DpcEvent
+            description: status defines the observed state of EventCorrelation
             properties:
-              acknowledgetime:
-                format: date-time
-                type: string
-              callhomed:
-                type: boolean
               conditions:
+                description: |-
+                  conditions represent the current state of the EventCorrelation resource.
+                  Each condition has a unique type and reflects the status of a specific aspect of the resource.
+
+                  Standard condition types include:
+                  - "Available": the resource is fully functional
+                  - "Progressing": the resource is being created or updated
+                  - "Degraded": the resource failed to reach or maintain its desired state
+
+                  The status of each condition is one of True, False, or Unknown.
                 items:
                   description: Condition contains details for one aspect of the current
                     state of this API Resource.
@@ -120,19 +117,9 @@ spec:
                   - type
                   type: object
                 type: array
-              correlated:
-                type: boolean
-              groupRef:
-                type: string
-              phase:
-                type: string
-              processedAt:
-                format: date-time
-                type: string
-              reason:
-                type: string
-              routedto:
-                type: string
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
