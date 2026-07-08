@@ -38,9 +38,12 @@ type DpcEventGroupSpec struct {
 
 // DpcEventGroupStatus defines the observed state of DpcEventGroup.
 type DpcEventGroupStatus struct {
-	Phase      string           `json:"phase"`
-	EventCount int              `json:"eventCount"`
-	Events     []EventReference `json:"events,omitempty"`
+	Phase          string           `json:"phase"`
+	EventCount     int              `json:"eventCount"`
+	Events         []EventReference `json:"events,omitempty"`
+	FirstEventTime metav1.Time      `json:"firstEventTime,omitempty"`
+	LastEventTime  metav1.Time      `json:"lastEventTime,omitempty"`
+	WindowExpires  metav1.Time      `json:windowExpires,omitempty`
 }
 
 // +kubebuilder:object:root=true
